@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+	 <!-- Required meta tags -->
+	 <meta charset="utf-8">
+	 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+ 
+	 <!-- Bootstrap CSS -->
+	 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+<body>
+ <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>	
+<script>
+	$(document).ready(function() 
+	{		
+		$("#addTodoButton").click(OnAddTodoListButton);			
+		$(document).on("click","#todoItem",OnTodoItemButton);	
+		$(document).on("click","#doneItem",OnDoneItemButton);	
+		
+		$(document).on("click","#todoItem",UpdateBadge);	
+		$(document).on("click","#doneItem",UpdateBadge);	
+		//UpdatedBadge($(document).find(".jumbotron"));
+	});	
+
+	function OnAddTodoListButton()
+	{
+		var todoItem = $("#addTodoInput").val();
+		if(todoItem != "")
+		{
+			$("#todoList").append("<li class=\"list-group-item\"><button id=\"todoItem\" class=\"btn btn-outline-dark\">"+todoItem+"</button></li>");
+			$("#addTodoInput").val(null);
+		}	
+	}	
+
+	function OnTodoItemButton()
+	{   
+		$(this).parent("li").remove();				
+		$(this).prop("id","doneItem");	
+		$("#doneList").append(this);
+	}
+	
+	function OnDoneItemButton()
+	{
+		$(this).parent("li").remove();
+		$(this).prop("id","todoItem");		
+		$("#todoList").append(this);
+	}
+
+	function UpdateBadge()
+	{
+		var $badge = $(document).find(".badge");
+		$badge.each(function()
+		{			
+			var $list = $(this).parents(".jumbotron").find(".list-group");
+			console.log($list);
+			$(this).text($list.length);
+			console.log($(this));
+		})	
+	}	
+
+	/*
+	function UpdatedBadge($jumbotron)
+	{
+		var $list = $jumbotron.find(".list-group");
+		console.log($list);
+		$jumbotron.find(".badge").text($list.length);
+	}*/
+</script>
+
+<div class="container-fluid">
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+			<a class="navbar-brand" href="#">
+			<img src="C:\Users\NICOLAS-LAPTOP\Desktop\TODOLISTSITE\Campus.png" width="119" height="19" alt="">
+			</a>
+		</nav>
+	<div class="row">			
+		<div class="col">
+			<div class="jumbotron junbotron-fluid">
+					<h3 class="display">TODO LIST						
+						<span class="badge badge-secondary badge-pill" id="todoListBadge">1</span>
+					</h3>
+					<ul class= "list-group" id="todoList">
+						<li class="list-group-item"><button id="todoItem" class="btn btn-outline-dark">Cras justo odio</button></li>							
+					</ul> 
+				<div class="input-group mb-3">	
+						<div class="input-group-prepend">
+							<label class="input-group-text">Item:</label>
+						</div>	  
+						<input type="text" class="form-control" id ="addTodoInput">
+						<div class="input-group-append">
+							<button type="button" class="btn btn-outline-secondary" id="addTodoButton">AddItem</button>
+						</div>
+				</div>					 
+			</div>
+		</div>
+		<div class="col">
+			<div class="jumbotron junbotron-fluid">
+				<h3 class="display">DONE
+					<span class="badge badge-secondary badge-pill" id="todoListBadge">0</span>
+				</h3>
+				<ul class= "list-group" id="doneList">				
+				</ul>
+			</div>
+		</div>
+</div>
+</body>
+</html>
